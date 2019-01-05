@@ -1,4 +1,4 @@
-package com.hades.kotlintrainning.data
+package com.hades.kotlintrainning.data.converter
 
 import android.arch.persistence.room.TypeConverter
 import java.util.*

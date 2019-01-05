@@ -1,14 +1,14 @@
 package com.hades.kotlintrainning.data.api
 
-import com.hades.kotlintrainning.data.api.response.MovieListResponse
+import com.hades.kotlintrainning.data.api.response.MovieResponse
 import com.hades.kotlintrainning.data.api.response.TvListResponse
 import com.hades.kotlintrainning.data.api.response.VideoResponse
 import com.hades.kotlintrainning.data.entity.Movie
 import io.reactivex.Single
 
-class MockApi : ApiService {
+abstract class MockApi : ApiService {
 
-    override fun getMovieList(hashMap: HashMap<String, String>): Single<MovieListResponse> {
+    override fun getMovieList(hashMap: HashMap<String, String>): Single<MovieResponse> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

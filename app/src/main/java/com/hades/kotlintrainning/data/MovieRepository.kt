@@ -1,12 +1,14 @@
 package com.hades.kotlintrainning.data
 
-import com.hades.kotlintrainning.data.api.response.MovieListResponse
-import com.hades.kotlintrainning.data.api.response.TvListResponse
+import com.hades.kotlintrainning.data.api.response.*
 import com.hades.kotlintrainning.data.entity.Movie
+import com.hades.kotlintrainning.data.entity.MovieDetail
 import io.reactivex.Completable
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Function4
 import io.reactivex.schedulers.Schedulers
 
 class MovieRepository private constructor() : BaseRepository() {
@@ -21,16 +23,27 @@ class MovieRepository private constructor() : BaseRepository() {
         }
     }
 
-    fun getMovieList(hashMap: HashMap<String, String>): Single<MovieListResponse> {
+    fun getMovieList(hashMap: HashMap<String, String>): Single<MovieResponse> {
         return apiService.getMovieList(hashMap)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun getMovieDetail(hashMap: HashMap<String, String>): Single<Movie> {
-        return apiService.getMovieDetail(hashMap)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+    fun fetchMovieDetail(movieId : Long) : Observable<MovieDetail> {
+        val id = movieId.toString()
+        return Observable.combineLatest(apiService.fetchMovieDetail(id,"2d5c8f11ff012edecb1b55ad782b07f3"),
+            apiService.fetchMovieVideo(id),
+            apiService.fetchCastDetail(id),
+            apiService.fetchSimilarMovie(id, 1),
+            Function4 { movieEntity: MovieDetail,
+                        videoResponse: VideoResponse,
+                        creditResponse: CreditResponse,
+                        movieApiResponse: MovieListResponse ->
+                movieEntity.videos = videoResponse.videos
+                movieEntity.crews = creditResponse.crew
+                movieEntity.casts = creditResponse.cast
+                movieEntity.similarMovies = movieApiResponse.results
+            }).cast(MovieDetail::class.java).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getTvList(hashMap: HashMap<String, String>): Single<TvListResponse> {

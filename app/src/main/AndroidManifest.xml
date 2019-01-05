@@ -28,6 +28,7 @@
 
         <activity android:name=".todo.TodoActivity" />
         <activity android:name=".movie.MovieActivity"/>
+        <activity android:name=".moviedetail.MovieDetailActivity"/>
 
     </application>
 

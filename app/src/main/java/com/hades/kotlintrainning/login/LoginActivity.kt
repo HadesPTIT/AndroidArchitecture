@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import com.hades.kotlintrainning.R
 import com.hades.kotlintrainning.base.BaseDataBindingActivity
 import com.hades.kotlintrainning.databinding.ActivityLoginBinding
@@ -24,6 +27,12 @@ class LoginActivity : BaseDataBindingActivity<ActivityLoginBinding>() {
 
     override val layoutID: Int
         get() = R.layout.activity_login
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun initData() {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
@@ -56,27 +65,24 @@ class LoginActivity : BaseDataBindingActivity<ActivityLoginBinding>() {
         mBinding.imageView.setOnTouchListener(object : OnSwipeTouchListener(applicationContext) {
 
             override fun onSwipeRight() {
-                if (isLeft) {
-                    mBinding.imageView.setImageResource(R.drawable.good_night_img)
-                    mBinding.textView.text = getString(R.string.text_night)
-                } else {
-                    mBinding.imageView.setImageResource(R.drawable.good_morning_img)
-                    mBinding.textView.text = getString(R.string.text_morning)
-                }
-                isLeft = !isLeft
+                swipe()
             }
 
             override fun onSwipeLeft() {
-                if (isLeft) {
-                    mBinding.imageView.setImageResource(R.drawable.good_night_img)
-                    mBinding.textView.text = getString(R.string.text_night)
-                } else {
-                    mBinding.imageView.setImageResource(R.drawable.good_morning_img)
-                    mBinding.textView.text = getString(R.string.text_morning)
-                }
-                isLeft = !isLeft
+                swipe()
             }
         })
+    }
+
+    fun swipe() {
+        if (isLeft) {
+            mBinding.imageView.setImageResource(R.drawable.good_night_img)
+            mBinding.textView.text = getString(R.string.text_night)
+        } else {
+            mBinding.imageView.setImageResource(R.drawable.good_morning_img)
+            mBinding.textView.text = getString(R.string.text_morning)
+        }
+        isLeft = !isLeft
     }
 
 }
