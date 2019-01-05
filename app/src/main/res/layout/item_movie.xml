@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable name="viewModel"
+                  type="com.hades.kotlintrainning.viewmodel.MovieViewModel"/>
+
+        <variable
+                name="item"
+                type="com.hades.kotlintrainning.data.entity.Movie"/>
+
+        <variable name="listener"
+                  type="com.hades.kotlintrainning.movie.MovieActivity.ItemClickListener"/>
+
+    </data>
+
+    <RelativeLayout android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:id="@+id/list_item"
+                    android:onClick="@{() -> listener.onItemClick(item)}"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:focusable="true"
+                    android:clickable="true">
+
+        <!--transitionName : animation-->
+        <com.hades.kotlintrainning.view.RectangleImageView
+                android:id="@+id/squareImageView"
+                android:src="@{item.backdrop_path, default=@drawable/ic_launcher_background}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:cropToPadding="false"
+                android:scaleType="centerCrop"
+                android:transitionName="@string/transition_banner"
+                app:roundedRadius="@dimen/corner_radius"/>
+
+        <TextView
+                android:id="@+id/txtTitle"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/movieRating"
+                android:layout_alignLeft="@+id/squareImageView"
+                android:layout_alignStart="@+id/squareImageView"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="@{item.title}"/>
+
+        <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_alignLeft="@+id/squareImageView"
+                android:layout_alignStart="@+id/squareImageView"
+                android:layout_below="@+id/txtTitle"
+                tools:text="@{item.release_date}"/>
+
+        <RatingBar
+                android:id="@+id/movieRating"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/squareImageView"
+                android:layout_alignStart="@+id/squareImageView"
+                android:layout_below="@+id/squareImageView"
+                android:layout_marginTop="5dp"
+                android:max="10"
+                tools:rating="2.5"/>
+
+        <ImageView android:layout_width="20dp"
+                   android:layout_marginTop="5dp"
+                   android:layout_alignParentRight="true"
+                   android:layout_alignParentEnd="true"
+                   android:layout_marginRight="16dp"
+                   android:layout_marginEnd="16dp"
+                   android:layout_below="@+id/squareImageView"
+                   android:src="@{item.isFavorite ? @drawable/ic_favorite_fill : @drawable/ic_favorite_border}"
+                   android:onClick="@{ () -> listener.onAddItemToFavorite(item)}"
+                   android:layout_height="20dp"/>
+
+    </RelativeLayout>
+
+</layout>

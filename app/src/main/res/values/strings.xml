@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">KotlinTrainning</string>
+
+    <string name="transition_banner">banner</string>
+    <string name="text_night">Night</string>
+    <string name="text_morning">Morning</string>
+
+</resources>
