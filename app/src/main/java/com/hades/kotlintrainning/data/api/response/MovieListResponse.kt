@@ -1,5 +1,8 @@
 package com.hades.kotlintrainning.data.api.response
 
-import com.hades.kotlintrainning.data.entity.Movie
+import android.os.Parcelable
+import com.hades.kotlintrainning.data.entity.MovieDetail
+import kotlinx.android.parcel.Parcelize
 
-class MovieListResponse : BaseListResponse<Movie>()
+@Parcelize
+class MovieListResponse : BaseListResponse<MovieDetail>(),Parcelable

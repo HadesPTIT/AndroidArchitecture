@@ -2,6 +2,7 @@ package com.hades.kotlintrainning.movie
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.GridLayoutManager
 import com.hades.kotlintrainning.R
 import com.hades.kotlintrainning.base.BaseDataBindingActivity
@@ -9,6 +10,7 @@ import com.hades.kotlintrainning.base.BaseViewAdapter
 import com.hades.kotlintrainning.base.SingleTypeAdapter
 import com.hades.kotlintrainning.data.entity.Movie
 import com.hades.kotlintrainning.databinding.ActivityMovieBinding
+import com.hades.kotlintrainning.utils.Navigation
 import com.hades.kotlintrainning.viewmodel.MovieViewModel
 
 class MovieActivity : BaseDataBindingActivity<ActivityMovieBinding>(), NavigatorListener {
@@ -67,7 +69,10 @@ class MovieActivity : BaseDataBindingActivity<ActivityMovieBinding>(), Navigator
     inner class ItemClickListener : BaseViewAdapter.Presenter {
 
         fun onItemClick(movie: Movie) {
-            movie.title?.let { showToast(it) }
+            // TODO : Transitions options android
+//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                this@MovieDetailActivity, childView, TRANSITION_IMAGE_NAME)
+            Navigation.navigateToScreen(this@MovieActivity,movie,null)
         }
 
         fun onAddItemToFavorite(movie: Movie) {

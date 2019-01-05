@@ -6,11 +6,21 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import android.support.annotation.VisibleForTesting
+import com.hades.kotlintrainning.data.converter.*
 import com.hades.kotlintrainning.data.dao.MovieDao
 import com.hades.kotlintrainning.data.entity.Movie
+import com.hades.kotlintrainning.data.entity.MovieDetail
 
-@Database(entities = [Movie::class], version = 1, exportSchema = false)
-@TypeConverters(DateTypeConverter::class)
+@Database(entities = [Movie::class,MovieDetail::class], version = 1, exportSchema = false)
+@TypeConverters(
+    DateTypeConverter::class,
+    GenreListTypeConverter::class,
+    CastListTypeConverter::class,
+    CrewListTypeConverter::class,
+    MovieListTypeConverter::class,
+    StringListConverter::class,
+    VideoListTypeConverter::class)
+
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
