@@ -69,7 +69,7 @@
     <dimen name="sliding_menu_width">80dp</dimen>
 
     <dimen name="activity_detail_image_frame_height">190dp</dimen>
-    <dimen name="activity_detail_image_frame_margin_top">120dp</dimen>
+    <dimen name="activity_detail_image_frame_margin_top">140dp</dimen>
 
     <dimen name="activity_detail_circle_size">5dp</dimen>
     <dimen name="video_item_share_size">80dp</dimen>
@@ -84,8 +84,8 @@
     <dimen name="menu_icon_size">40dp</dimen>
     <dimen name="search_bottom_layout_height">55dp</dimen>
 
-    <dimen name="list_item_similar_movies_icon_width">145dp</dimen>
-    <dimen name="list_item_similar_movies_icon_height">185dp</dimen>
+    <dimen name="list_item_similar_movies_icon_width">120dp</dimen>
+    <dimen name="list_item_similar_movies_icon_height">155dp</dimen>
 
     <dimen name="fragment_container_height">320dp</dimen>
 

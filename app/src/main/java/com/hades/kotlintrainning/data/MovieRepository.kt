@@ -1,5 +1,6 @@
 package com.hades.kotlintrainning.data
 
+import com.hades.kotlintrainning.BuildConfig
 import com.hades.kotlintrainning.data.api.response.*
 import com.hades.kotlintrainning.data.entity.Movie
 import com.hades.kotlintrainning.data.entity.MovieDetail
@@ -31,10 +32,10 @@ class MovieRepository private constructor() : BaseRepository() {
 
     fun fetchMovieDetail(movieId : Long) : Observable<MovieDetail> {
         val id = movieId.toString()
-        return Observable.combineLatest(apiService.fetchMovieDetail(id,"2d5c8f11ff012edecb1b55ad782b07f3"),
-            apiService.fetchMovieVideo(id),
-            apiService.fetchCastDetail(id),
-            apiService.fetchSimilarMovie(id, 1),
+        return Observable.combineLatest(apiService.fetchMovieDetail(id,BuildConfig.API_KEY),
+            apiService.fetchMovieVideo(id,BuildConfig.API_KEY),
+            apiService.fetchCastDetail(id,BuildConfig.API_KEY),
+            apiService.fetchSimilarMovie(id, 1,BuildConfig.API_KEY),
             Function4 { movieEntity: MovieDetail,
                         videoResponse: VideoResponse,
                         creditResponse: CreditResponse,
@@ -43,7 +44,8 @@ class MovieRepository private constructor() : BaseRepository() {
                 movieEntity.crews = creditResponse.crew
                 movieEntity.casts = creditResponse.cast
                 movieEntity.similarMovies = movieApiResponse.results
-            }).cast(MovieDetail::class.java).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                return@Function4 movieEntity
+            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 
     fun getTvList(hashMap: HashMap<String, String>): Single<TvListResponse> {

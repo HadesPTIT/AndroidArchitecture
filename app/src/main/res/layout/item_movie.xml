@@ -21,14 +21,13 @@
                     android:layout_margin="5dp"
                     android:id="@+id/list_item"
                     android:onClick="@{() -> listener.onItemClick(item)}"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:focusable="true"
-                    android:clickable="true">
+                    android:background="?attr/selectableItemBackgroundBorderless">
 
         <!--transitionName : animation-->
         <com.hades.kotlintrainning.view.RectangleImageView
                 android:id="@+id/squareImageView"
-                android:src="@{item.backdrop_path, default=@drawable/ic_launcher_background}"
+                app:url="@{item.backdrop_path}"
+                app:quality="@{@string/quality_original}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"

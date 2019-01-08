@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".moviedetail.MovieDetailActivity">
 
     <data>
+
+        <variable name="viewModel"
+                  type="com.hades.kotlintrainning.viewmodel.MovieDetailViewModel"/>
 
     </data>
 
@@ -27,11 +32,10 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:scaleType="centerCrop"
-                        app:layout_constraintDimensionRatio="H,16:8"
+                        app:layout_constraintDimensionRatio="H,16:10"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
-
 
                 <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView"
@@ -200,7 +204,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="@dimen/margin_large"
                                 android:autoLink="all"
-                                android:visibility="invisible"
+                                android:visibility="visible"
                                 android:fontFamily="@font/gotham"
                                 android:gravity="right|center_vertical"
                                 android:onClick="handleExpandAction"
@@ -218,11 +222,10 @@
                                 android:id="@+id/included_layout"
                                 layout="@layout/list_item_detail"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="100dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/expand_button"/>
-
 
                     </android.support.constraint.ConstraintLayout>
 

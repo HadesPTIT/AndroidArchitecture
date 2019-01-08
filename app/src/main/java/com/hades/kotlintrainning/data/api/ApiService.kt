@@ -18,17 +18,17 @@ interface ApiService {
     @GET("3/discover/tv")
     fun getTvList(@QueryMap hashMap: HashMap<String, String> = HashMap()): Single<TvListResponse>
 
-    @GET("/3/movie/{movieId}/{api_key}")
-    fun fetchMovieDetail(@Path("movieId") movieId: String,@Path("api_key") api_key: String): Observable<MovieDetail>
+    @GET("/3/movie/{movieId}")
+    fun fetchMovieDetail(@Path("movieId") movieId: String,@Query("api_key") apiKey: String): Observable<MovieDetail>
 
     @GET("/3/movie/{movieId}/videos")
-    fun fetchMovieVideo(@Path("movieId") movieId: String): Observable<VideoResponse>
+    fun fetchMovieVideo(@Path("movieId") movieId: String,@Query("api_key") apiKey: String): Observable<VideoResponse>
 
     @GET("/3/movie/{movieId}/credits")
-    fun fetchCastDetail(@Path("movieId") movieId: String): Observable<CreditResponse>
+    fun fetchCastDetail(@Path("movieId") movieId: String,@Query("api_key") apiKey: String): Observable<CreditResponse>
 
     @GET("/3/movie/{movieId}/similar")
-    fun fetchSimilarMovie(@Path("movieId") movieId: String, @Query("page") page: Long): Observable<MovieListResponse>
+    fun fetchSimilarMovie(@Path("movieId") movieId: String, @Query("page") page: Long,@Query("api_key") apiKey: String): Observable<MovieListResponse>
 
 
 
