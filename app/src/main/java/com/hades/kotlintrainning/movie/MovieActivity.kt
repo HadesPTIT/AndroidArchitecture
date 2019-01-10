@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.GridLayoutManager
 import com.hades.kotlintrainning.R
+import com.hades.kotlintrainning.adapter.MovieAdapter
 import com.hades.kotlintrainning.base.BaseDataBindingActivity
 import com.hades.kotlintrainning.base.BaseViewAdapter
 import com.hades.kotlintrainning.base.SingleTypeAdapter
@@ -20,14 +21,40 @@ class MovieActivity : BaseDataBindingActivity<ActivityMovieBinding>(), Navigator
 
     override val layoutID: Int get() = R.layout.activity_movie
 
+    private lateinit var discoverAdapter: MovieAdapter
+
     override fun initData() {
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-        movieAdapter = SingleTypeAdapter(this, R.layout.item_movie)
+
+//        movieAdapter = SingleTypeAdapter(this, R.layout.item_movie)
+//        mBinding.recyclerMovie.layoutManager = GridLayoutManager(this, 2)
+//        mBinding.recyclerMovie.adapter = movieAdapter
+//        mBinding.navigator = this
+//        movieViewModel.getListMovie(1)
+//        movieAdapter.presenter = ItemClickListener()
+
+        discoverAdapter = MovieAdapter(ItemClickListener())
         mBinding.recyclerMovie.layoutManager = GridLayoutManager(this, 2)
-        mBinding.recyclerMovie.adapter = movieAdapter
+        mBinding.recyclerMovie.adapter = discoverAdapter
         mBinding.navigator = this
-        movieViewModel.getListMovie(1)
-        movieAdapter.presenter = ItemClickListener()
+        movieViewModel.getDiscoverMovies()
+
+        movieViewModel.apply {
+            movies.observe(this@MovieActivity, Observer {
+                discoverAdapter.submitList(it)
+            })
+            movieNetworkState.observe(this@MovieActivity, Observer {
+                discoverAdapter.setNetworkState(it)
+            })
+
+            isShowLoading.observe(this@MovieActivity, Observer {
+                it?.let { isLoading ->
+                    showLoading(isLoading)
+                }
+            })
+
+        }
+
         initEvent()
     }
 
@@ -72,7 +99,7 @@ class MovieActivity : BaseDataBindingActivity<ActivityMovieBinding>(), Navigator
             // TODO : Transitions options android
 //            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
 //                this@MovieDetailActivity, childView, TRANSITION_IMAGE_NAME)
-            Navigation.navigateToScreen(this@MovieActivity,movie,null)
+            Navigation.navigateToScreen(this@MovieActivity, movie, null)
         }
 
         fun onAddItemToFavorite(movie: Movie) {
@@ -81,6 +108,10 @@ class MovieActivity : BaseDataBindingActivity<ActivityMovieBinding>(), Navigator
             } else {
                 movieViewModel.insertMovieToFavorite(movie)
             }
+        }
+
+        fun retry() {
+
         }
 
     }

@@ -10,6 +10,8 @@ interface AppConstant {
 
         const val YOUTUBE_IMG_URL = "https://img.youtube.com/vi/%s/hqdefault.jpg"
 
+        const val PAGE_SIZE = 20
+
     }
 
 }

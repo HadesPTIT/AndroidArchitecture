@@ -1,11 +1,17 @@
 package com.hades.kotlintrainning.viewmodel
 
 import android.app.Application
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations.map
+import android.arch.lifecycle.Transformations.switchMap
+import android.arch.paging.PagedList
 import com.hades.kotlintrainning.BuildConfig
 import com.hades.kotlintrainning.base.BaseViewModel
 import com.hades.kotlintrainning.data.MovieRepository
+import com.hades.kotlintrainning.data.NetworkResource
 import com.hades.kotlintrainning.data.api.ApiParams
+import com.hades.kotlintrainning.data.api.NetworkState
 import com.hades.kotlintrainning.data.entity.Movie
 import java.util.concurrent.TimeUnit
 
@@ -18,7 +24,21 @@ class MovieViewModel(application: Application) : BaseViewModel(application) {
 
     val mFavoriteMovies = MutableLiveData<List<Movie>>()
 
-    private var mDMovies = listOf<Movie>()
+    // Save scroll position of Recyclerview when it stops or destroy
+    var movieScrollPosition = 0
+
+    // Movie
+    private var movieResult = MutableLiveData<NetworkResource<LiveData<PagedList<Movie>>>>()
+    val movies = switchMap(movieResult) { it.data }!!
+    val movieNetworkState = switchMap(movieResult) { it.networkState }!!
+    private val movieRefreshState = switchMap(movieResult) { it.refreshState }
+    val isShowLoading = map(movieRefreshState) { it == NetworkState.RUNNING }!!
+
+
+    fun getDiscoverMovies() {
+        movieRepository.init()
+        movieResult.value = movieRepository.fetchDiscoverMovies()
+    }
 
     fun getListMovie(page: Int) {
         val hashMap = HashMap<String, String>()

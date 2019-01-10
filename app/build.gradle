@@ -78,6 +78,9 @@ dependencies {
     //    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
 
+    // Paging
+    implementation "android.arch.paging:runtime:1.0.1"
+
     // Circle Image
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
