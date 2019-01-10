@@ -15,4 +15,18 @@
     <string name="player_error">Error initializing YouTube player: %s</string>
     <string name="detail_tv_similar">Similar Tv Series</string>
 
+    <string name="quality_w500">w500</string>
+    <string name="quality_w154">w154</string>
+    <string name="quality_original">original</string>
+    <string name="profilePath">/bsAy8f8UZKairXQzRukU5FP4XAQ.jpg</string>
+    
+    
+    <string name="yt_quality_hq">hqdefault</string>
+    <string name="yt_quality_mq">mqdefault</string>
+    <string name="yt_quality_default">default</string>
+    <string name="yt_quality_original">original</string>
+
+
+
+
 </resources>

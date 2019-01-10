@@ -43,6 +43,7 @@
                         android:layout_marginTop="@dimen/margin"
                         android:fontFamily="@font/gotham"
                         android:gravity="left"
+                        android:visibility="visible"
                         android:text="@string/title_cast"
                         android:textAllCaps="true"
                         android:textColor="@color/detail_list_item_text"
