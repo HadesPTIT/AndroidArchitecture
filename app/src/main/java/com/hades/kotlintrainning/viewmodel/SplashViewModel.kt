@@ -2,7 +2,7 @@ package com.hades.kotlintrainning.viewmodel
 
 import android.app.Application
 
-import com.hades.kotlintrainning.base.BaseViewModel
+import com.hades.kotlintrainning.ui.base.BaseViewModel
 
 class SplashViewModel(application: Application) : BaseViewModel(application) {
 

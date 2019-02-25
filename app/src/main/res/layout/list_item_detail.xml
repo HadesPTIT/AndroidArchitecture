@@ -6,7 +6,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.hades.kotlintrainning.view.ExpandableLayout
+        <com.hades.kotlintrainning.components.ExpandableLayout
                 android:id="@+id/expandable_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
 
 
             </android.support.constraint.ConstraintLayout>
-        </com.hades.kotlintrainning.view.ExpandableLayout>
+        </com.hades.kotlintrainning.components.ExpandableLayout>
 
     </android.support.constraint.ConstraintLayout>
 

@@ -2,8 +2,7 @@ package com.hades.kotlintrainning.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.MutableLiveData
-import android.text.TextUtils
-import com.hades.kotlintrainning.base.BaseViewModel
+import com.hades.kotlintrainning.ui.base.BaseViewModel
 
 class LoginViewModel(application: Application) : BaseViewModel(application) {
 

@@ -5,7 +5,7 @@
 
         <variable
             name="ctx"
-            type="com.hades.kotlintrainning.login.LoginActivity" />
+            type="com.hades.kotlintrainning.ui.login.LoginActivity" />
 
         <variable
             name="model"

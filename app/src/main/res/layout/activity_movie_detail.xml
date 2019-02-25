@@ -126,7 +126,7 @@
                         </LinearLayout>
 
 
-                        <com.hades.kotlintrainning.view.CollectionPicker
+                        <com.hades.kotlintrainning.components.CollectionPicker
                                 android:id="@+id/collection_item_picker"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                                 app:layout_constraintTop_toBottomOf="@+id/collection_item_picker"/>
 
 
-                        <com.hades.kotlintrainning.view.CollectionPicker
+                        <com.hades.kotlintrainning.components.CollectionPicker
                                 android:id="@+id/movie_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

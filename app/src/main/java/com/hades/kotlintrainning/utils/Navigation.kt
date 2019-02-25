@@ -4,10 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
-import com.hades.kotlintrainning.constant.AppConstant
-import com.hades.kotlintrainning.constant.AppConstant.Companion.INTENT_MOVIE
+import com.hades.kotlintrainning.common.AppConstant
+import com.hades.kotlintrainning.common.AppConstant.Companion.INTENT_MOVIE
 import com.hades.kotlintrainning.data.entity.Movie
-import com.hades.kotlintrainning.moviedetail.MovieDetailActivity
+import com.hades.kotlintrainning.ui.moviedetail.MovieDetailActivity
 
 class Navigation : AppConstant {
 

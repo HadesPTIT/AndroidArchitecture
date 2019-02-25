@@ -1,6 +1,6 @@
 package com.hades.kotlintrainning.data
 
-import com.hades.kotlintrainning.entity.Todo
+import com.hades.kotlintrainning.data.entity.Todo
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

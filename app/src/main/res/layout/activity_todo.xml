@@ -10,7 +10,7 @@
 
         <variable
             name="navigator"
-            type="com.hades.kotlintrainning.todo.NavigationListener"/>
+            type="com.hades.kotlintrainning.ui.todo.NavigationListener"/>
 
     </data>
 
