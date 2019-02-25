@@ -34,11 +34,19 @@ class MovieActivity : BaseDataBindingActivity<ActivityMovieBinding>(), Navigator
 //        movieAdapter.presenter = ItemClickListener()
 
         discoverAdapter = MovieAdapter(ItemClickListener())
-        mBinding.recyclerMovie.layoutManager = GridLayoutManager(this, 2)
+        val layoutManager = GridLayoutManager(this, 2)
+        mBinding.recyclerMovie.layoutManager = layoutManager
         mBinding.recyclerMovie.adapter = discoverAdapter
         mBinding.navigator = this
         movieViewModel.getDiscoverMovies()
-
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return when (discoverAdapter.getItemViewType(position)) {
+                    R.layout.item_network_state -> layoutManager.spanCount
+                    else -> 1
+                }
+            }
+        }
         movieViewModel.apply {
             movies.observe(this@MovieActivity, Observer {
                 discoverAdapter.submitList(it)

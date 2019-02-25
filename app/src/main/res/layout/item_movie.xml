@@ -27,7 +27,7 @@
         <com.hades.kotlintrainning.view.RectangleImageView
                 android:id="@+id/squareImageView"
                 app:url="@{item.backdrop_path}"
-                app:quality="@{@string/quality_w154}"
+                app:quality="@{@string/quality_original}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
