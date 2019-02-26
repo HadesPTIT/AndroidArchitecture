@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.hades.kotlintrainning.ui.todo.TodoActivity"/>
+            type="com.hades.kotlintrainning.ui.todo.TodoActivity.ItemClickListener"/>
 
     </data>
 

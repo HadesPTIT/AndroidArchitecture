@@ -16,8 +16,8 @@ import com.hades.kotlintrainning.databinding.ActivityMovieDetailBinding
 import com.hades.kotlintrainning.ui.base.BaseViewAdapter
 import com.hades.kotlintrainning.ui.base.SingleTypeAdapter
 import com.hades.kotlintrainning.viewmodel.MovieDetailViewModel
-import com.hades.kotlintrainning.youtube.YoutubePlayerActivity
-import java.util.*
+import com.hades.kotlintrainning.ui.youtube.YoutubePlayerActivity
+import java.util.Arrays
 
 class MovieDetailActivity : BaseDataBindingActivity<ActivityMovieDetailBinding>() {
 
@@ -36,7 +36,7 @@ class MovieDetailActivity : BaseDataBindingActivity<ActivityMovieDetailBinding>(
 
         val movie = intent.getParcelableExtra<Movie>(AppConstant.INTENT_MOVIE)
         Glide.with(this).load(String.format(AppConstant.IMAGE_URL, movie.poster_path)).into(mBinding.image)
-//        mBinding.expandButton.paintFlags = mBinding.expandButton.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        mBinding.expandButton.paintFlags = mBinding.expandButton.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         movieDetailViewModel.fetchMovieDetail(movie.id.toLong())
 
         initEvent()

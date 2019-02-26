@@ -12,6 +12,8 @@
     <android.support.constraint.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
             android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -42,7 +44,7 @@
                 android:maxEms="6"
                 android:maxLines="1"
                 android:textColor="@color/profile_item_name"
-                android:textSize="@dimen/font_small"
+                android:textSize="@dimen/font_xsmall"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintLeft_toRightOf="parent"
                 app:layout_constraintRight_toLeftOf="parent"
@@ -62,7 +64,7 @@
                 android:maxEms="6"
                 android:maxLines="1"
                 android:textColor="@color/profile_item_info"
-                android:textSize="@dimen/font_xsmall"
+                android:textSize="@dimen/font_xxsmall"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintLeft_toRightOf="parent"
                 app:layout_constraintRight_toLeftOf="parent"

@@ -1,18 +1,28 @@
 package com.hades.kotlintrainning.data
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Transformations.switchMap
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
 import com.hades.kotlintrainning.BuildConfig
+import com.hades.kotlintrainning.common.AppConstant
 import com.hades.kotlintrainning.data.api.response.*
+import com.hades.kotlintrainning.data.datasource.MoviesDataSource
 import com.hades.kotlintrainning.data.entity.Movie
 import com.hades.kotlintrainning.data.entity.MovieDetail
-import io.reactivex.Completable
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
+import com.hades.kotlintrainning.data.network.NetworkResource
+import com.hades.kotlintrainning.utils.SchedulerProvider
+import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Function4
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class MovieRepository private constructor() : BaseRepository() {
+
+    lateinit var schedulerProvider: SchedulerProvider
+    lateinit var networkExecutor: Executor
 
     private object Holder {
         val INSTANCE = MovieRepository()
@@ -24,10 +34,41 @@ class MovieRepository private constructor() : BaseRepository() {
         }
     }
 
+    fun init() {
+        networkExecutor = Executors.newFixedThreadPool(5)
+        schedulerProvider = object : SchedulerProvider {
+            override fun io(): Scheduler {
+                return Schedulers.io()
+            }
+
+            override fun ui(): Scheduler {
+                return AndroidSchedulers.mainThread()
+            }
+
+        }
+    }
+
     fun getMovieList(hashMap: HashMap<String, String>): Single<MovieResponse> {
         return apiService.getMovieList(hashMap)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun fetchDiscoverMovies(): NetworkResource<LiveData<PagedList<Movie>>> {
+        val sourceFactory = MoviesDataSource.Factory(apiService, schedulerProvider, networkExecutor)
+        val livePageList = LivePagedListBuilder(sourceFactory, AppConstant.PAGE_SIZE)
+            .setFetchExecutor(networkExecutor)
+            .build()
+        val sourceData = sourceFactory.sourceLiveData
+
+        return NetworkResource(
+            data = livePageList,
+            networkState = switchMap(sourceData) { it.networkState },
+            refreshState = switchMap(sourceData) { it.initialLoadingState },
+            refresh = { sourceData.value?.invalidate() },
+            retry = { sourceData.value?.retryWhenAllFailed() },
+            clear = { sourceData.value?.clear() }
+        )
     }
 
     fun fetchMovieDetail(movieId : Long) : Observable<MovieDetail> {

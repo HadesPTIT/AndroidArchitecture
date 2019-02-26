@@ -7,7 +7,7 @@
                   type="com.hades.kotlintrainning.viewmodel.MovieViewModel"/>
 
         <variable name="navigator"
-                  type="com.hades.kotlintrainning.movie.NavigatorListener"/>
+                  type="com.hades.kotlintrainning.ui.movie.NavigatorListener"/>
 
 
     </data>

@@ -8,7 +8,7 @@
                   type="com.hades.kotlintrainning.data.entity.Video"/>
 
         <variable name="listener"
-                  type="com.hades.kotlintrainning.moviedetail.MovieDetailActivity.ItemClickListener"/>
+                  type="com.hades.kotlintrainning.ui.moviedetail.MovieDetailActivity.ItemClickListener"/>
 
     </data>
 

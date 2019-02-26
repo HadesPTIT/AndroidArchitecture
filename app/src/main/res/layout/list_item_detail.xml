@@ -28,7 +28,8 @@
                 <View
                         android:id="@+id/line_above_cast_title"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="1px"
+                        android:visibility="gone"
                         android:layout_marginRight="@dimen/padding"
                         android:background="@color/detail_list_item_view"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +72,8 @@
                 <View
                         android:id="@+id/line_above_crew_title"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                        android:layout_height="1px"
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/margin"
                         android:background="@color/detail_list_item_view"
                         app:layout_constraintTop_toBottomOf="@+id/cast_list"/>

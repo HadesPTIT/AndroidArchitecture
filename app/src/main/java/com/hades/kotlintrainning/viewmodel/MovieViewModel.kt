@@ -1,58 +1,38 @@
 package com.hades.kotlintrainning.viewmodel
 
 import android.app.Application
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import com.hades.kotlintrainning.BuildConfig
+import android.arch.lifecycle.Transformations.map
+import android.arch.lifecycle.Transformations.switchMap
+import android.arch.paging.PagedList
 import com.hades.kotlintrainning.ui.base.BaseViewModel
 import com.hades.kotlintrainning.data.MovieRepository
-import com.hades.kotlintrainning.data.api.ApiParams
 import com.hades.kotlintrainning.data.entity.Movie
-import java.util.concurrent.TimeUnit
+import com.hades.kotlintrainning.data.network.NetworkResource
+import com.hades.kotlintrainning.data.network.NetworkState
 
 class MovieViewModel(application: Application) : BaseViewModel(application) {
 
     private val movieRepository = MovieRepository.instance
-    private val mMovies = MutableLiveData<List<Movie>>()
 
     private val isInserted = MutableLiveData<Boolean>()
 
     val mFavoriteMovies = MutableLiveData<List<Movie>>()
 
-    private var mDMovies = listOf<Movie>()
+    val movieResult = MutableLiveData<NetworkResource<LiveData<PagedList<Movie>>>>()
 
-    fun getListMovie(page: Int) {
-        val hashMap = HashMap<String, String>()
-        hashMap[ApiParams.SORT_BY] = POPULARITY_DESC
-        hashMap[ApiParams.PAGE] = page.toString()
-        hashMap[ApiParams.API_KEY]= BuildConfig.API_KEY
-        subscribe(
-            movieRepository.getMovieList(hashMap)
-                .timeout(10, TimeUnit.SECONDS)
-                .doOnSubscribe {
-                    loadingLiveData.postValue(true)
-                }
-                .doAfterSuccess {
-                    loadingLiveData.postValue(false)
-                }
-                .subscribe(
-                    {
-                        it.results?.let { list ->
-                            list.forEach { movie ->
-                                if (isInFavorite(movie.id.toLong())) {
-                                    movie.isFavorite = true
-                                }
-                            }
-                            mMovies.postValue(list)
-                        }
-                    }, {
-                        mMovies.postValue(null)
-                    }
-                )
-        )
-    }
+    val movies = switchMap(movieResult) { it.data }!!
 
-    fun getMovies(): MutableLiveData<List<Movie>> {
-        return mMovies
+    val movieNetworkState = switchMap(movieResult) { it.networkState }!!
+
+    val movieRefreshState = switchMap(movieResult) { it.refreshState }!!
+
+    val isShowLoading = map(movieRefreshState) { it == NetworkState.RUNNING }!!
+
+    fun fetchDiscoverMovies() {
+        movieRepository.init()
+        movieResult.value = movieRepository.fetchDiscoverMovies()
     }
 
     fun isInFavorite(id: Long): Boolean {
@@ -66,7 +46,9 @@ class MovieViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun deleteMovieFromFavorite(movie: Movie) {
-        subscribe(movieRepository.deleteMovie(movie).subscribe())
+        subscribe(movieRepository.deleteMovie(movie).subscribe {
+            isInserted.postValue(false)
+        })
     }
 
     fun getFavoriteMovies() {
@@ -77,6 +59,11 @@ class MovieViewModel(application: Application) : BaseViewModel(application) {
 
     fun isInserted(): MutableLiveData<Boolean> {
         return isInserted
+    }
+
+    fun retry() {
+        val listing = movieResult.value
+        listing?.retry?.invoke()
     }
 
     companion object {

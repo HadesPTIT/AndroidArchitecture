@@ -3,6 +3,7 @@ package com.hades.kotlintrainning.utils
 import android.databinding.BindingAdapter
 import android.support.v7.widget.AppCompatImageView
 import android.widget.ImageView
+import android.widget.RatingBar
 import com.bumptech.glide.Glide
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -19,4 +20,9 @@ fun setImageViewResource(imageView: CircleImageView, url: String?,quality : Stri
 @BindingAdapter(value = ["app:thumbnailKey","app:quality"], requireAll = false)
 fun setYoutubeImageResource(imageView : AppCompatImageView, key : String?, quality: String? = "original") {
     Glide.with(imageView).load("https://img.youtube.com/vi/$key/$quality.jpg").into(imageView)
+}
+
+@BindingAdapter(value = ["app:rating"], requireAll = true)
+fun setRating(view : RatingBar, rating : Double) {
+    view.rating = rating.toFloat().div(2)
 }

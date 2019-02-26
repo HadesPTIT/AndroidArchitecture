@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="java.lang.Math"/>
+        
         <variable name="viewModel"
                   type="com.hades.kotlintrainning.viewmodel.MovieViewModel"/>
 
@@ -12,7 +14,7 @@
                 type="com.hades.kotlintrainning.data.entity.Movie"/>
 
         <variable name="listener"
-                  type="com.hades.kotlintrainning.movie.MovieActivity.ItemClickListener"/>
+                  type="com.hades.kotlintrainning.ui.movie.MovieActivity.ItemClickListener"/>
 
     </data>
 
@@ -67,7 +69,7 @@
                 android:layout_alignStart="@+id/squareImageView"
                 android:layout_below="@+id/squareImageView"
                 android:layout_marginTop="5dp"
-                android:max="10"
+                app:rating="@{item.vote_average}"
                 tools:rating="2.5"/>
 
         <ImageView android:layout_width="20dp"

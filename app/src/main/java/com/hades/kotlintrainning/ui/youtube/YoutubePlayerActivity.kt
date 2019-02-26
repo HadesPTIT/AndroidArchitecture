@@ -1,4 +1,4 @@
-package com.hades.kotlintrainning.youtube
+package com.hades.kotlintrainning.ui.youtube
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
